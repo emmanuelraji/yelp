@@ -5,7 +5,11 @@ function useBusiness() {
   const [businesses, setBusinesses] = useState<businessType[]>([]);
 
   async function searchYelp(term: string, location: string, sortBy: string) {
-    const API_KEY: string = import.meta.env.VITE_YELP_API_KEY;
+    const API_KEY = import.meta.env.VITE_YELP_API_KEY;
+
+    const BASE_URL =
+      "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search";
+
     const options = {
       method: "GET",
       headers: {
@@ -13,12 +17,13 @@ function useBusiness() {
         Authorization: `Bearer ${API_KEY}`,
       },
     };
+
     const response = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}&sort_by=${sortBy}&limit=20`,
+      `${BASE_URL}${location}?location=&term=${term}&sort_by=${sortBy}&limit=20`,
       options
     );
     const data = await response.json();
-    console.log(data);
+
     setBusinesses(data.businesses);
   }
 

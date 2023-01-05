@@ -11,10 +11,10 @@ export type businessType = {
   image_url: string;
 };
 
-export type SearchProps = {
-  searchYelp: (term: string, location: string, sortBy: string) => Promise<void>;
+export type optionsType = {
+  [key: string]: string;
 };
 
-export type OptionsType = {
-  [key: string]: string;
+export type searchProps = {
+  searchYelp: (term: string, location: string, sortBy: string) => Promise<void>;
 };

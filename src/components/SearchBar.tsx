@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from "react";
-import { OptionsType, SearchProps } from "../types";
+import { optionsType, searchProps } from "../types";
 
-function SearchBar({ searchYelp }: SearchProps) {
+function SearchBar({ searchYelp }: searchProps) {
   const [term, setTerm] = useState("");
   const [location, setLocation] = useState("");
   const [sortBy, setSortBy] = useState("best_match");
 
-  const sortByOptions: OptionsType = {
+  const sortByOptions: optionsType = {
     "Best Match": "best_match",
     "Highest Rated": "rating",
     "Most Reviewed": "review_count",
@@ -56,22 +56,24 @@ function SearchBar({ searchYelp }: SearchProps) {
   }
 
   return (
-    <div>
+    <section className="search">
       <ul>{renderSortByOptions()}</ul>
-      <input
-        type="text"
-        placeholder="Search Business"
-        value={term}
-        onChange={handleTermChange}
-      />
-      <input
-        type="text"
-        placeholder="Where?"
-        value={location}
-        onChange={handleLocationChange}
-      />
+      <div>
+        <input
+          type="text"
+          placeholder="Search Business"
+          value={term}
+          onChange={handleTermChange}
+        />
+        <input
+          type="text"
+          placeholder="Where?"
+          value={location}
+          onChange={handleLocationChange}
+        />
+      </div>
       <button onClick={handleSubmit}>Let's go!</button>
-    </div>
+    </section>
   );
 }
 
