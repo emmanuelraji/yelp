@@ -3,27 +3,12 @@ import SearchBar from "./SearchBar";
 import useBusiness from "../hooks/useBusiness";
 
 function App() {
-  const {
-    term,
-    location,
-    businesses,
-    onButtonClick,
-    onSubmit,
-    handleLocationChange,
-    handleBusinessChange,
-  } = useBusiness();
+  const { businesses, searchYelp } = useBusiness();
 
   return (
     <div className="App">
       <h1>ravenous</h1>
-      <SearchBar
-        onButtonClick={onButtonClick}
-        onSubmit={onSubmit}
-        term={term}
-        location={location}
-        onLocationInput={handleLocationChange}
-        onBusinessInput={handleBusinessChange}
-      />
+      <SearchBar searchYelp={searchYelp} />
       <BusinessList businesses={businesses} />
     </div>
   );

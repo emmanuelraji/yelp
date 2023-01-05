@@ -1,59 +1,76 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
+import { OptionsType, SearchProps } from "../types";
 
-type Props = {
-  onButtonClick: (e: HTMLButtonElement) => void;
-  onLocationInput: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBusinessInput: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: () => void;
-  term: string;
-  location: string;
-};
+function SearchBar({ searchYelp }: SearchProps) {
+  const [term, setTerm] = useState("");
+  const [location, setLocation] = useState("");
+  const [sortBy, setSortBy] = useState("best_match");
 
-function SearchBar({
-  onButtonClick,
-  onSubmit,
-  term,
-  location,
-  onLocationInput,
-  onBusinessInput,
-}: Props) {
+  const sortByOptions: OptionsType = {
+    "Best Match": "best_match",
+    "Highest Rated": "rating",
+    "Most Reviewed": "review_count",
+  };
+
+  function renderSortByOptions() {
+    return Object.keys(sortByOptions).map((item) => {
+      let sortByOptionValue = sortByOptions[item];
+      return (
+        <li
+          key={sortByOptionValue}
+          onClick={() => handleSortByChange(sortByOptionValue)}
+          className={getSortByClass(sortByOptionValue)}
+        >
+          {item}
+        </li>
+      );
+    });
+  }
+
+  function getSortByClass(sortByOption: string) {
+    if (sortBy === sortByOption) {
+      return "active";
+    }
+    return "";
+  }
+
+  function handleSortByChange(sortByOption: string) {
+    setSortBy(sortByOption);
+  }
+
+  function handleTermChange(e: ChangeEvent) {
+    const target = e.target as HTMLInputElement;
+    setTerm(target.value);
+  }
+
+  function handleLocationChange(e: ChangeEvent) {
+    const target = e.target as HTMLInputElement;
+    setLocation(target.value);
+  }
+
+  function handleSubmit() {
+    searchYelp(term, location, sortBy);
+    setTerm("");
+    setLocation("");
+    setSortBy("best_match");
+  }
+
   return (
     <div>
-      <button
-        type="button"
-        value="best_match"
-        onClick={(e) => onButtonClick(e.target as HTMLButtonElement)}
-      >
-        Best Match
-      </button>
-      <button
-        type="button"
-        value="rating"
-        onClick={(e) => onButtonClick(e.target as HTMLButtonElement)}
-      >
-        Highest Rated
-      </button>
-      <button
-        type="button"
-        value="review_count"
-        onClick={(e) => onButtonClick(e.target as HTMLButtonElement)}
-      >
-        Most Reviewed
-      </button>
-      <br />
+      <ul>{renderSortByOptions()}</ul>
       <input
         type="text"
         placeholder="Search Business"
         value={term}
-        onChange={onBusinessInput}
+        onChange={handleTermChange}
       />
       <input
         type="text"
         placeholder="Where?"
         value={location}
-        onChange={onLocationInput}
+        onChange={handleLocationChange}
       />
-      <button onClick={onSubmit}>Let's go!</button>
+      <button onClick={handleSubmit}>Let's go!</button>
     </div>
   );
 }
