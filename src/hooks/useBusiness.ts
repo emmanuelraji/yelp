@@ -1,36 +1,15 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { businessType } from "../types";
 
 function useBusiness() {
   const [businesses, setBusinesses] = useState<businessType[]>([]);
-  const [term, setTerm] = useState("");
-  const [location, setLocation] = useState("");
-  const [sortBy, setSortBy] = useState("best_match");
-
-  function onButtonClick(e: HTMLButtonElement) {
-    setSortBy(e.value);
-  }
-
-  function handleLocationChange(e: ChangeEvent<HTMLInputElement>) {
-    setLocation(e.target.value);
-  }
-  function handleBusinessChange(e: ChangeEvent<HTMLInputElement>) {
-    setTerm(e.target.value);
-  }
-
-  function onSubmit() {
-    searchYelp(term, location, sortBy);
-    setTerm("");
-    setLocation("");
-    setSortBy("best_match");
-  }
 
   async function searchYelp(term: string, location: string, sortBy: string) {
-    const API_KEY: string = "";
+    const API_KEY: string = import.meta.env.VITE_YELP_API_KEY;
     const options = {
       method: "GET",
       headers: {
-        accept: "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${API_KEY}`,
       },
     };
@@ -43,15 +22,7 @@ function useBusiness() {
     setBusinesses(data.businesses);
   }
 
-  return {
-    businesses,
-    term,
-    location,
-    onButtonClick,
-    onSubmit,
-    handleBusinessChange,
-    handleLocationChange,
-  };
+  return { businesses, searchYelp };
 }
 
 export default useBusiness;
