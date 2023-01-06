@@ -11,6 +11,12 @@ export type businessType = {
   image_url: string;
 };
 
+export type businessesType = {
+  businesses: businessType[];
+  error: string | null;
+  isLoading: boolean;
+};
+
 export type optionsType = {
   [key: string]: string;
 };
