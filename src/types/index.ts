@@ -9,16 +9,17 @@ export type businessType = {
     zip_code: string;
   };
   image_url: string;
-};
-
-export type businessesType = {
-  businesses: businessType[];
-  error: string | null;
-  isLoading: boolean;
+  categories: [{ title: string }];
 };
 
 export type optionsType = {
   [key: string]: string;
+};
+
+export type businessesProps = {
+  businesses: businessType[];
+  error: string | null;
+  isLoading: boolean;
 };
 
 export type searchProps = {

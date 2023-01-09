@@ -1,7 +1,7 @@
-import { businessesType } from "../types";
+import { businessesProps } from "../types";
 import Business from "./Business";
 
-function BusinessList({ businesses, isLoading, error }: businessesType) {
+function BusinessList({ businesses, isLoading, error }: businessesProps) {
   return (
     <section className="businesses">
       {error && <div>{error}</div>}

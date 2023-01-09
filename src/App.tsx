@@ -7,7 +7,7 @@ function App() {
   const { businesses, isLoading, error, searchYelp } = useBusiness();
 
   return (
-    <div className="App">
+    <>
       <header>
         <h1>ravenous</h1>
       </header>
@@ -19,7 +19,7 @@ function App() {
           error={error}
         />
       </main>
-    </div>
+    </>
   );
 }
 
