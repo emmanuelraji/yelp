@@ -38,14 +38,14 @@ function SearchBar({ searchYelp }: searchProps) {
     setSortBy(sortByOption);
   }
 
-  function handleTermChange(e: ChangeEvent) {
-    const target = e.target as HTMLInputElement;
-    setTerm(target.value);
+  function handleTermChange(e: ChangeEvent<HTMLInputElement>) {
+    const termInputValue = e.target.value;
+    setTerm(termInputValue);
   }
 
-  function handleLocationChange(e: ChangeEvent) {
-    const target = e.target as HTMLInputElement;
-    setLocation(target.value);
+  function handleLocationChange(e: ChangeEvent<HTMLInputElement>) {
+    const locationInputValue = e.target.value;
+    setLocation(locationInputValue);
   }
 
   function handleSubmit() {
