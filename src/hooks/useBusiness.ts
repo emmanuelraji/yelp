@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { businessType } from "../types";
 
 const API_KEY = import.meta.env.VITE_YELP_API_KEY;
@@ -21,7 +21,9 @@ function useBusiness() {
 
   async function searchYelp(term: string, location: string, sortBy: string) {
     setBusinesses([]);
+    setError(null);
     setIsLoading(true);
+
     try {
       const response = await fetch(
         `${BASE_URL}?location=${location}&term=${term}&sort_by=${sortBy}&limit=20`,
@@ -44,11 +46,6 @@ function useBusiness() {
     }
   }
 
-  useEffect(() => {
-    setBusinesses(businesses);
-  }, [businesses]);
-
-  console.log(businesses);
   return { businesses, isLoading, error, searchYelp };
 }
 
