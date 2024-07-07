@@ -1,10 +1,18 @@
-import { FormEvent, useState } from "react";
-import { optionsType, searchProps } from "../types";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { optionsType } from "../types";
+import useBusiness from "../hooks/useBusiness";
+import BusinessList from "./BusinessList";
 
-function SearchBar({ searchYelp }: searchProps) {
+function SearchBar() {
   const [term, setTerm] = useState("");
   const [location, setLocation] = useState("");
   const [sortBy, setSortBy] = useState("best_match");
+
+  const { businesses, isLoading, error, searchYelp } = useBusiness(
+    term,
+    location,
+    sortBy
+  );
 
   const sortByOptions: optionsType = {
     "Best Match": "best_match",
@@ -36,35 +44,44 @@ function SearchBar({ searchYelp }: searchProps) {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    searchYelp(term, location, sortBy);
-    setTerm("");
-    setLocation("");
-    setSortBy("best_match");
+    // const formData = new FormData(e.target as HTMLFormElement);
+
+    setSortBy(sortBy);
+    searchYelp();
   }
 
   return (
-    <section className="search">
-      <ul>{renderSortByOptions()}</ul>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="term"></label>
-        <input
-          type="text"
-          id="term"
-          placeholder="Search Business"
-          value={term}
-          onChange={(e) => setTerm(e.target.value)}
-        />
-        <label htmlFor="location"></label>
-        <input
-          type="text"
-          id="location"
-          placeholder="Where?"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-        <button>Let's go!</button>
-      </form>
-    </section>
+    <>
+      <section className="search">
+        <ul>{renderSortByOptions()}</ul>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="term"></label>
+          <input
+            type="text"
+            id="term"
+            name="term"
+            placeholder="Search Business"
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+          />
+          <label htmlFor="location"></label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            placeholder="Where?"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+          <button>Let's go!</button>
+        </form>
+      </section>
+      <BusinessList
+        businesses={businesses}
+        isLoading={isLoading}
+        error={error}
+      />
+    </>
   );
 }
 
