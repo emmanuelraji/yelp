@@ -40,7 +40,7 @@ header {
   color: var(--accent-color);
   border-bottom: 1px solid var(--accent-color);
 }
-.search div {
+.search form input {
   margin-bottom: 30px;
 }
 .search input {
@@ -54,16 +54,29 @@ header {
   border-radius: 3px;
   color: #ffffff;
   background-color: var(--accent-color);
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
 }
 
 /* business list */
+article {
+  box-shadow: 0 0 10px #cccccc;
+  border-radius: 10px;
+}
+
+figcaption {
+  padding: 0 15px 10px 15px;
+}
+
 .businesses {
   max-width: 1000px;
   margin: 0 auto;
+  margin-bottom: 50px;
 }
 .businesslist {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-auto-columns: 1fr;
   gap: 30px;
 }
@@ -74,21 +87,24 @@ h2 {
   margin: 10px 0;
 }
 
-.img-container {
-  overflow: hidden;
-}
-
 .img-container img {
-  height: 250px;
   aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .business-category {
   font-size: 0.875rem;
   font-weight: 700;
   text-align: right;
-  text-transform: uppercase;
-  color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #ffffff;
+  margin-right: auto;
+  margin-bottom: 10px;
+  width: fit-content;
+  padding: 3px 10px;
+  border-radius: 5px;
 }
 
 .business-info {

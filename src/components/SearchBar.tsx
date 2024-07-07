@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { optionsType, searchProps } from "../types";
 
 function SearchBar({ searchYelp }: searchProps) {
@@ -18,7 +18,7 @@ function SearchBar({ searchYelp }: searchProps) {
       return (
         <li
           key={sortByOptionValue}
-          onClick={() => handleSortByChange(sortByOptionValue)}
+          onClick={() => setSortBy(sortByOptionValue)}
           className={getSortByClass(sortByOptionValue)}
         >
           {item}
@@ -34,21 +34,8 @@ function SearchBar({ searchYelp }: searchProps) {
     return "";
   }
 
-  function handleSortByChange(sortByOption: string) {
-    setSortBy(sortByOption);
-  }
-
-  function handleTermChange(e: ChangeEvent<HTMLInputElement>) {
-    const termInputValue = e.target.value;
-    setTerm(termInputValue);
-  }
-
-  function handleLocationChange(e: ChangeEvent<HTMLInputElement>) {
-    const locationInputValue = e.target.value;
-    setLocation(locationInputValue);
-  }
-
-  function handleSubmit() {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     searchYelp(term, location, sortBy);
     setTerm("");
     setLocation("");
@@ -58,21 +45,25 @@ function SearchBar({ searchYelp }: searchProps) {
   return (
     <section className="search">
       <ul>{renderSortByOptions()}</ul>
-      <div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="term"></label>
         <input
           type="text"
+          id="term"
           placeholder="Search Business"
           value={term}
-          onChange={handleTermChange}
+          onChange={(e) => setTerm(e.target.value)}
         />
+        <label htmlFor="location"></label>
         <input
           type="text"
+          id="location"
           placeholder="Where?"
           value={location}
-          onChange={handleLocationChange}
+          onChange={(e) => setLocation(e.target.value)}
         />
-      </div>
-      <button onClick={handleSubmit}>Let's go!</button>
+        <button>Let's go!</button>
+      </form>
     </section>
   );
 }
