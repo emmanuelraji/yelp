@@ -21,7 +21,3 @@ export type businessesProps = {
   error: string | null;
   isLoading: boolean;
 };
-
-export type searchProps = {
-  searchYelp: (term: string, location: string, sortBy: string) => Promise<void>;
-};
