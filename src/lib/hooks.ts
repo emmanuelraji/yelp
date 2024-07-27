@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { businessType } from "../types";
+import { useState } from "react";
+import { BusinessType } from "./types";
 
 const API_KEY = import.meta.env.VITE_YELP_API_KEY;
 
@@ -14,23 +14,12 @@ const options = {
   },
 };
 
-function useBusiness(term: string, location: string, sortBy: string) {
-  const [businesses, setBusinesses] = useState<businessType[]>([]);
+function useBusiness() {
+  const [businesses, setBusinesses] = useState<BusinessType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const firstRender = useRef(true);
 
-  useEffect(() => {
-    if (firstRender.current) {
-      console.log("working");
-      firstRender.current = false;
-    } else {
-      console.log("function runs");
-      searchYelp();
-    }
-  }, [sortBy]);
-
-  async function searchYelp() {
+  async function searchYelp(term: string, location: string, sortBy: string) {
     setBusinesses([]);
     setError(null);
     setIsLoading(true);
