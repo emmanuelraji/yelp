@@ -70,10 +70,12 @@ figcaption {
 }
 
 .businesses {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   margin-bottom: 50px;
+  padding: 0 4rem;
 }
+
 .businesslist {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -122,11 +124,25 @@ h2 {
 }
 
 /* media queries */
-@media (max-width: 500px) {
+@media (max-width: 850px) {
   .search {
     background-image: url("./assets/background_search_mobile.jpg");
   }
   .search input {
     width: 100%;
+    margin: 0 auto;
+  }
+  .businesslist {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  article {
+    margin-bottom: 40px;
+  }
+
+  .businesslist {
+    display: block;
   }
 }

@@ -1,4 +1,4 @@
-export type businessType = {
+export type BusinessType = {
   id: string;
   name: string;
   rating: number;
@@ -12,12 +12,12 @@ export type businessType = {
   categories: [{ title: string }];
 };
 
-export type optionsType = {
+export type Options = {
   [key: string]: string;
 };
 
-export type businessesProps = {
-  businesses: businessType[];
+export type BusinessesProps = {
+  businesses: BusinessType[];
   error: string | null;
   isLoading: boolean;
 };

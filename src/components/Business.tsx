@@ -1,6 +1,6 @@
-import { businessType } from "../types";
+import { BusinessType } from "../lib/types";
 
-function Business({ business }: { business: businessType }) {
+function Business({ business }: { business: BusinessType }) {
   return (
     <article>
       <figure>

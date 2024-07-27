@@ -1,87 +1,56 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { optionsType } from "../types";
-import useBusiness from "../hooks/useBusiness";
-import BusinessList from "./BusinessList";
+import SortByOptions from "./SortByOptions";
 
-function SearchBar() {
+function SearchBar({
+  searchYelp,
+}: {
+  searchYelp: (term: string, location: string, sortBy: string) => void;
+}) {
   const [term, setTerm] = useState("");
   const [location, setLocation] = useState("");
   const [sortBy, setSortBy] = useState("best_match");
+  const firstRender = useRef(true);
 
-  const { businesses, isLoading, error, searchYelp } = useBusiness(
-    term,
-    location,
-    sortBy
-  );
-
-  const sortByOptions: optionsType = {
-    "Best Match": "best_match",
-    "Highest Rated": "rating",
-    "Most Reviewed": "review_count",
-  };
-
-  function renderSortByOptions() {
-    return Object.keys(sortByOptions).map((item) => {
-      let sortByOptionValue = sortByOptions[item];
-      return (
-        <li
-          key={sortByOptionValue}
-          onClick={() => setSortBy(sortByOptionValue)}
-          className={getSortByClass(sortByOptionValue)}
-        >
-          {item}
-        </li>
-      );
-    });
-  }
-
-  function getSortByClass(sortByOption: string) {
-    if (sortBy === sortByOption) {
-      return "active";
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      if (location && term) {
+        searchYelp(term, location, sortBy);
+      }
     }
-    return "";
-  }
+  }, [sortBy]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // const formData = new FormData(e.target as HTMLFormElement);
-
-    setSortBy(sortBy);
-    searchYelp();
+    searchYelp(term, location, sortBy);
   }
 
   return (
-    <>
-      <section className="search">
-        <ul>{renderSortByOptions()}</ul>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="term"></label>
-          <input
-            type="text"
-            id="term"
-            name="term"
-            placeholder="Search Business"
-            value={term}
-            onChange={(e) => setTerm(e.target.value)}
-          />
-          <label htmlFor="location"></label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            placeholder="Where?"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <button>Let's go!</button>
-        </form>
-      </section>
-      <BusinessList
-        businesses={businesses}
-        isLoading={isLoading}
-        error={error}
-      />
-    </>
+    <section className="search">
+      <SortByOptions sortBy={sortBy} setSortBy={setSortBy} />
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="term"></label>
+        <input
+          type="text"
+          id="term"
+          name="term"
+          placeholder="Search Business"
+          value={term}
+          onChange={(e) => setTerm(e.target.value)}
+        />
+        <label htmlFor="location"></label>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          placeholder="Where?"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
+        <button>Let's go!</button>
+      </form>
+    </section>
   );
 }
 
