@@ -15,9 +15,3 @@ export type BusinessType = {
 export type Options = {
   [key: string]: string;
 };
-
-export type BusinessesProps = {
-  businesses: BusinessType[];
-  error: string | null;
-  isLoading: boolean;
-};
