@@ -1,7 +1,13 @@
-import { BusinessesProps } from "../lib/types";
+import { BusinessType } from "../lib/types";
 import Business from "./Business";
 
-function BusinessList({ businesses, isLoading, error }: BusinessesProps) {
+type Props = {
+  businesses: BusinessType[];
+  error: string | null;
+  isLoading: boolean;
+};
+
+function BusinessList({ businesses, isLoading, error }: Props) {
   return (
     <section className="businesses">
       {error && <div>{error}</div>}
